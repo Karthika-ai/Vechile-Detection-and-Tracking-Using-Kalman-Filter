@@ -1,20 +1,31 @@
 ## Vehicle Detection and Tracking
 
-Vehicle detection is one of the essential process for many vision-based trafﬁc surveillance applications. The location or a bounding box of a vehicle must be extracted from the trafﬁc image. This detected location of a vehicle in an image can be further applied to several applications such as vehicletracking or counting. The cropped image of a vehicle can also be used for vehicle type and model classiﬁcation
-In this project we illustrates the detection and tracking of multiple vehicles using a camera mounted inside a self-driving car.The images captured by the camera are taken as the input. 
+This project illustrates the detection and tracking of vehicles using Kalman Filter. Following operations are performed in this analysis:
 
-In this project we use the image frames which has been converted from the videos as the input. Then we initialize the detector  which localizes the object that need to be detected and updates the tracker program to track the object along its path  which if futher showcases as a bounding box in the image.
+    1.Prediction of current and future location of the vehicle.
+   
+    2.Correcting the prediction as per the new measurements attained
+   
+    3.Optimizing the noise created by faulty detections.
+   
+In this analysis, we detect and track multiple vehicles using a camera mounted inside a selfdriving car. The images captured by the camera are taken as the input. In the image, the car is captured and a bounding box is created around the car. The model “ssd_mobilenet_v1_coco” which is pretrained on MS COCO datset is used for the detection of car.
 
-This project makes use of an object detection API called MS COCO(Common Objects in Context) dataset, as the image dataset was created with the goal of advancing image recognition. It is often used to benchmark algorithms to compare the performance of real-time object detection. The format of the COCO dataset is automatically interpreted by advanced neural network libraries.
+The coordinates of all four corners of the bounding are noted and state of the vehicle is determined at a particular time. Here, the rate of change of position gives the velocity. We consider the velocity as constant in the analysis. (Hence, acceleration is zero.)
 
-From MS COCO dataset, the project has been design to create bounding boxes with some coordinates. we use the kalman filter to detect the moving car from one frame to nextby the Prediction of the object’s future location and Correction of the prediction based on new measurements. 
-Appropriate Kalman Filter equations will be used for the analysis.The proposed
-algorithm can be applied to multiple moving objects.
+Then, we implement Kalman filter to perform two main operations:
+
+      1.Prediction of objects current location using the previous states.
+      
+      2.In update, current measurements are used to correct the state.
 
 
 ## Key files in this repo
 
-
+      1.Pre Trained Model/frozen_inference_graph.pb -- pre-trained mobilenet-coco model
+      2.test_images -- Video split into frame(23), which is considered as an input
+      3.main.py -- Starting with Loading the data, Implementing the detection, Tracking, Prediction, and Update  
+      4.project_video.mp4 -- Video of a vehicle travelling on the road which is split into frames.
+ 
 ## Detection
 
 
