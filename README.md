@@ -40,14 +40,14 @@ https://github.com/kcg2015/Vehicle-Detection-and-Tracking/tree/master/test_image
 
 ## STATE EQUATIONS
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/13.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/13.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/Screen%20Shot%202022-03-19%20at%208.44.05%20PM.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/Screen%20Shot%202022-03-19%20at%208.44.05%20PM.png?raw=true)
 
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/1.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/1.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/2.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/2.png?raw=true)
 
 
 
@@ -67,17 +67,17 @@ u - Control Input
 
 Here, Q consists of the variances associated with each of the state estimates as well as the correlation between the errors in the state estimates. 
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/Screen%20Shot%202022-03-19%20at%208.36.58%20PM.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/Screen%20Shot%202022-03-19%20at%208.36.58%20PM.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/3.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/3.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/4.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/4.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/5.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/5.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/6.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/6.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/7.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/7.png?raw=true)
 
 
 
@@ -132,11 +132,11 @@ In this way, the tracker and the detection associated in the matching are added 
 We include two important design parameters, min_hits and max_age, in the pipeline. The parameter min_hits is the number of consecutive matches needed to establish a track. The parameter max_age is number of consecutive unmatched detections before a track is deleted. Both parameters need to be tuned to improve the tracking and detection performance.
 
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/8.png?raw=true)
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/9.png?raw=true)
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/10.png?raw=true)
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/11.png?raw=true)
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/12.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/8.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/9.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/10.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/11.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/12.png?raw=true)
 
 
 
