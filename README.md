@@ -1,9 +1,13 @@
 ## Vehicle Detection and Tracking
 
-Vehicle tracking has a wide variety of applications. The image resolution of the video available from most
-traffic camera system is low. In many cases for tracking multi object, distinguishing them from another
-isn’t easy because of their similarity. In this project we illustrates the detection and tracking of multiple vehicles using a camera mounted inside a self-driving car.The images captured by the camera are taken as the input. At this stage, we are planning to use some open-source frameworks like Tensor flow models or other Object detection models which are trained on the MS COCO (Microsoft Common Objects in Context) dataset to design the model to create bounding boxes with some coordinates. we use the kalman filter to detect the moving car from one frame to next
-by the Prediction of the object’s future location and Correction of the prediction based on new measurements. 
+Vehicle detection is one of the essential process for many vision-based trafﬁc surveillance applications. The location or a bounding box of a vehicle must be extracted from the trafﬁc image. This detected location of a vehicle in an image can be further applied to several applications such as vehicletracking or counting. The cropped image of a vehicle can also be used for vehicle type and model classiﬁcation
+In this project we illustrates the detection and tracking of multiple vehicles using a camera mounted inside a self-driving car.The images captured by the camera are taken as the input. 
+
+In this project we use the image frames which has been converted from the videos as the input. Then we initialize the detector  which localizes the object that need to be detected and updates the tracker program to track the object along its path  which if futher showcases as a bounding box in the image.
+
+This project makes use of an object detection API called MS COCO(Common Objects in Context) dataset, as the image dataset was created with the goal of advancing image recognition. It is often used to benchmark algorithms to compare the performance of real-time object detection. The format of the COCO dataset is automatically interpreted by advanced neural network libraries.
+
+From MS COCO dataset, the project has been design to create bounding boxes with some coordinates. we use the kalman filter to detect the moving car from one frame to nextby the Prediction of the object’s future location and Correction of the prediction based on new measurements. 
 Appropriate Kalman Filter equations will be used for the analysis.The proposed
 algorithm can be applied to multiple moving objects.
 
@@ -39,6 +43,20 @@ Q - Process Covariance
 B - Control Function
 
 u - Control Input
+
+The coordinates of the upper right, upper left, bottom right, bottom left corners of the bounding box are  (𝑥1,𝑦1) ,  (𝑥2,𝑦2) ,  (𝑥3,𝑦3)  and  (𝑥4,𝑦4)  respectively. Since  𝑥1  must equals to  𝑥4 ,  𝑥2  must equals to  𝑥3 ,  𝑦1  must equals to  𝑦2 , and  𝑦3  equals to  𝑦4 , the coordinates can be written as  (𝑥1,𝑦1) ,  (𝑥2,𝑦1) ,  (𝑥2,𝑦3)  and  (𝑥1,𝑦3) . Changing the notation by letting  𝑦2  denotes  𝑦3 , we have  (𝑥1,𝑦1) ,  (𝑥2,𝑦1) ,  (𝑥2,𝑦2)  and  (𝑥1,𝑦2)  for upper right, upper left, bottom right, bottom left respectively.
+
+By the assumption that velocity is constant so that accelaration is zero, we write out the following equations for each corner (state quation, control equation):
+
+(𝑥1,𝑦1)=(𝑥1, 𝑘−1+𝑑𝑥1, 𝑘−1Δ𝑡, 𝑦1, 𝑘−1+𝑑𝑦1, 𝑘−1) 
+
+(𝑥2,𝑦1)=(𝑥2, 𝑘−1+𝑑𝑥2, 𝑘−1Δ𝑡, 𝑦1, 𝑘−1+𝑑𝑦1, 𝑘−1) 
+
+(𝑥2,𝑦2)=(𝑥2, 𝑘−1+𝑑𝑥2, 𝑘−1Δ𝑡, 𝑦2, 𝑘−1+𝑑𝑦2, 𝑘−1)
+
+(𝑥1,𝑦2)=(𝑥1, 𝑘−1+𝑑𝑥1, 𝑘−1Δ𝑡, 𝑦2, 𝑘−1+𝑑𝑦2, 𝑘−1) 
+
+
 
 ### Prediction phase: equations
 
