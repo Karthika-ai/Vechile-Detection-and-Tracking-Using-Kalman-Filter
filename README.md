@@ -23,8 +23,10 @@ Then, we implement Kalman filter to perform two main operations:
 
       1.Pre Trained Model/frozen_inference_graph.pb -- pre-trained mobilenet-coco model
       2.test_images -- Video split into frame(23), which is considered as an input
-      3.main.py -- Starting with Loading the data, Implementing the detection, Tracking, Prediction, and Update  
-      4.project_video.mp4 -- Video of a vehicle travelling on the road which is split into frames.
+      3.Data Uploading Steps -- Steps to upload the data from the github repository into the collab notebook
+      4.main.py -- Starting with Loading the data, Implementing the detection, Tracking, Prediction, and Update  
+      5.project_video.mp4 -- Video of a vehicle travelling on the road which is split into frames.
+      
  
 
 ## DATA SOURCE
@@ -75,6 +77,12 @@ Here, Q consists of the variances associated with each of the state estimates as
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/6.png?raw=true)
 
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/7.png?raw=true)
+
+
+
+## DATA UPLOAD
+
+
 
 
 ## IMPLEMENTATION AND TEST TRACKER
