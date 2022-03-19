@@ -144,3 +144,13 @@ So, we have implemented the detection and tracking logic which includes detectio
 
 The model has performed pretty well and produced desirable results in prediction, measurement and updation, depending the assumptions taken into consideration.
 
+
+## CITATION:
+
+1. The logic in the work https://github.com/kcg2015/Vehicle-Detection-and-Tracking is taken as a reference for this analysis.
+2. https://machinelearningspace.com/2d-object-tracking-using-kalman-filter/
+3. https://machinelearningspace.com/object-tracking-python/
+
+
+
+
