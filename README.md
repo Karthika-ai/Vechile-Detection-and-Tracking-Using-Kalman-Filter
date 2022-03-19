@@ -26,103 +26,78 @@ Then, we implement Kalman filter to perform two main operations:
       3.main.py -- Starting with Loading the data, Implementing the detection, Tracking, Prediction, and Update  
       4.project_video.mp4 -- Video of a vehicle travelling on the road which is split into frames.
  
-## Detection
+
+## DATA SOURCE
+
+Originial video:
+https://github.com/kcg2015/Vehicle-Detection-and-Tracking/blob/master/project_video.mp4
+Video captured into frames:
+https://github.com/kcg2015/Vehicle-Detection-and-Tracking/tree/master/test_images
+
+## STATE EQUATIONS
+
+The general linear dynamic system's state equation used is of the form:  𝑥𝑘=𝑥𝑘−1+𝑢𝑘−1Δ𝑡+0.5∗𝑎𝑘−1∗Δ𝑡2 
+where,
+𝑥𝑘  = state at a given time stamp 'k' (current state)
+𝑥𝑘−1  = = state at a given time 'k-1' (prior state)
+Δ𝑡  is change in time
+u is the velocity at time 'k-1' (which is controlling the satates)
+a is acceleration at time 'k-1'
+In this analysis, we consider the object travelling in 2-D (both in X and Y direction).
+Hence there will be state equations in terms of x and y.
+Here, we are considering the four corners of the bounding box.
 
 
-## Kalman Filter for Bounding Box Measurement
+!!!!!! bounding image
 
-We use Kalman filter for tracking objects. Kalman filter has the following important features that tracking can benefit from:
 
-Prediction of object's future location
-Correction of the prediction based on new measurements
-Reduction of noise introduced by inaccurate detections
-Facilitating the process of association of multiple objects to their tracks
-Kalman filter consists of two steps: prediction and update. The first step uses previous states to predict the current state. The second step uses the current measurement, such as detection bounding box location , to correct the state. The formula are provided in the following:
+In a X-Y plane:
 
-### Kalman Filter Equation:
+y1 = y2 ; y4 = y3 (since the pair of points are on same horizontal line)
+x1 = x4 ; x2 = x3 (since the pair of points are on same verticle line)
 
-### Prediction phase: notations
+Hence, there will be four state equtions:
+𝑥1,𝑘=𝑥1,𝑘−1+𝑢1,𝑘−1Δ𝑡 
+𝑥2,𝑘=𝑥2,𝑘−1+𝑢2,𝑘−1Δ𝑡 
+𝑦1,𝑘=𝑦1,𝑘−1+𝑢1,𝑘−1Δ𝑡 
+𝑦1,𝑘=𝑦1,𝑘−1+𝑢1,𝑘−1Δ𝑡 
+
+(As already mentioned acceletaion term is zero, since velocity os considered constant.)
+
+
+The state equation are always paired wih measurement equations, that describes the relationship between state and measurement at the current time stamp k.
+The corresponding equations are obtained by taking the first derivative of staes with respect to time:
+𝑧𝑥1,𝑘=𝑢𝑥1,𝑘−1 
+𝑧𝑥2,𝑘=𝑢𝑥2,𝑘−1 
+𝑧𝑦1,𝑘=𝑢𝑦1,𝑘−1 
+𝑧𝑦2,𝑘=𝑢𝑦2,𝑘−1 
+
+
+## Notations:
 
 X - State Mean
-
 P - State Covariance
-
 F - State Transition Matrix
-
 Q - Process Covariance
-
 B - Control Function
-
 u - Control Input
-
-The coordinates of the upper right, upper left, bottom right, bottom left corners of the bounding box are  (𝑥1,𝑦1) ,  (𝑥2,𝑦2) ,  (𝑥3,𝑦3)  and  (𝑥4,𝑦4)  respectively. Since  𝑥1  must equals to  𝑥4 ,  𝑥2  must equals to  𝑥3 ,  𝑦1  must equals to  𝑦2 , and  𝑦3  equals to  𝑦4 , the coordinates can be written as  (𝑥1,𝑦1) ,  (𝑥2,𝑦1) ,  (𝑥2,𝑦3)  and  (𝑥1,𝑦3) . Changing the notation by letting  𝑦2  denotes  𝑦3 , we have  (𝑥1,𝑦1) ,  (𝑥2,𝑦1) ,  (𝑥2,𝑦2)  and  (𝑥1,𝑦2)  for upper right, upper left, bottom right, bottom left respectively.
-
-By the assumption that velocity is constant so that accelaration is zero, we write out the following equations for each corner (state quation, control equation):
-
-(𝑥1,𝑦1)=(𝑥1, 𝑘−1+𝑑𝑥1, 𝑘−1Δ𝑡, 𝑦1, 𝑘−1+𝑑𝑦1, 𝑘−1) 
-
-(𝑥2,𝑦1)=(𝑥2, 𝑘−1+𝑑𝑥2, 𝑘−1Δ𝑡, 𝑦1, 𝑘−1+𝑑𝑦1, 𝑘−1) 
-
-(𝑥2,𝑦2)=(𝑥2, 𝑘−1+𝑑𝑥2, 𝑘−1Δ𝑡, 𝑦2, 𝑘−1+𝑑𝑦2, 𝑘−1)
-
-(𝑥1,𝑦2)=(𝑥1, 𝑘−1+𝑑𝑥1, 𝑘−1Δ𝑡, 𝑦2, 𝑘−1+𝑑𝑦2, 𝑘−1) 
+Here, Q consists of the variances associated with each of the state estimates as well as the correlation between the errors in the state estimates. 
 
 
 
-### Prediction phase: equations
 
-### Update phase: notations
 
-### Update phase: equations
 
-### Kalman Filter Implementation
 
-The state vector has eight elements as follows:
-```
-[up, up_dot, left, left_dot, down, down_dot, right, right_dot]
-```
-That is, we use the coordinates and their first-order derivatives of the up left corner and lower right corner of the bounding box.
 
-The process matrix, assuming the constant velocity (thus no acceleration), is:
 
-```
-self.F = np.array([[1, self.dt, 0,  0,  0,  0,  0, 0],
-                    [0, 1,  0,  0,  0,  0,  0, 0],
-                    [0, 0,  1,  self.dt, 0,  0,  0, 0],
-                    [0, 0,  0,  1,  0,  0,  0, 0],
-                    [0, 0,  0,  0,  1,  self.dt, 0, 0],
-                    [0, 0,  0,  0,  0,  1,  0, 0],
-                    [0, 0,  0,  0,  0,  0,  1, self.dt],
-                    [0, 0,  0,  0,  0,  0,  0,  1]])
-```
-		    
-The measurement matrix, given that the detector only outputs the coordindate (not velocity), is:
-```
-self.H = np.array([[1, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 1, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 1, 0, 0, 0], 
-                   [0, 0, 0, 0, 0, 0, 1, 0]])
-```
-The state, process, and measurement noises are :
-```
- # Initialize the state covariance
 
- self.L = 100.0
- self.P = np.diag(self.L*np.ones(8))
-       
-        
- # Initialize the process covariance
- self.Q_comp_mat = np.array([[self.dt**4/2., self.dt**3/2.],
-                                    [self.dt**3/2., self.dt**2]])
- self.Q = block_diag(self.Q_comp_mat, self.Q_comp_mat, 
-                            self.Q_comp_mat, self.Q_comp_mat)
-        
-# Initialize the measurement covariance
-self.R_scaler = 1.0/16.0
-self.R_diag_array = self.R_ratio * np.array([self.L, self.L, self.L, self.L])
-self.R = np.diag(self.R_diag_array)
-```
-Here self.R_scaler represents the "magnitude" of measurement noise relative to state noise. A low self.R_scaler indicates a more reliable measurement. The following figures visualize the impact of measurement noise to the Kalman filter process. The green bounding box represents the prediction (initial) state. The red bounding box represents the measurement. If measurement noise is low, the updated state (aqua colored bounding box) is very close to the measurement (aqua bounding box completely overlaps over the red bounding box).
+
+
+
+
+
+
 
 ![alt text](https://github.com/kcg2015/Vehicle-Detection-and-Tracking/raw/master/example_imgs/low_meas_noise.png)
 
