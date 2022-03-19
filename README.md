@@ -31,22 +31,13 @@ Then, we implement Kalman filter to perform two main operations:
 
 Originial video:
 https://github.com/kcg2015/Vehicle-Detection-and-Tracking/blob/master/project_video.mp4
+
 Video captured into frames:
 https://github.com/kcg2015/Vehicle-Detection-and-Tracking/tree/master/test_images
 
 ## STATE EQUATIONS
 
-The general linear dynamic system's state equation used is of the form:  𝑥𝑘=𝑥𝑘−1+𝑢𝑘−1Δ𝑡+0.5∗𝑎𝑘−1∗Δ𝑡2 
-where,
-𝑥𝑘  = state at a given time stamp 'k' (current state)
-𝑥𝑘−1  = = state at a given time 'k-1' (prior state)
-Δ𝑡  is change in time
-u is the velocity at time 'k-1' (which is controlling the satates)
-a is acceleration at time 'k-1'
-In this analysis, we consider the object travelling in 2-D (both in X and Y direction).
-Hence there will be state equations in terms of x and y.
-Here, we are considering the four corners of the bounding box.
-
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/13.png?raw=true)
 
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/Screen%20Shot%202022-03-19%20at%208.44.05%20PM.png?raw=true)
 
@@ -57,14 +48,20 @@ Here, we are considering the four corners of the bounding box.
 
 
 
-## Notations:
+## NOTATIONS
 
 X - State Mean
+
 P - State Covariance
+
 F - State Transition Matrix
+
 Q - Process Covariance
+
 B - Control Function
+
 u - Control Input
+
 Here, Q consists of the variances associated with each of the state estimates as well as the correlation between the errors in the state estimates. 
 
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/Screen%20Shot%202022-03-19%20at%208.36.58%20PM.png?raw=true)
@@ -80,7 +77,7 @@ Here, Q consists of the variances associated with each of the state estimates as
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/7.png?raw=true)
 
 
-## Implementing and test tracker
+## IMPLEMENTATION AND TEST TRACKER
 
 The operations - prediction and update take place in this phase.
 In prediction, the thye previous statres are used to predict the current state. In update, the current measurement value (location of the bounding box) is used, to correct the state.
@@ -123,7 +120,7 @@ In this analysis, we implement Linear Assignment and Hungarian (Munkres) algorit
 If multiple detections are identified, we need to assign each of them to a tracker. Here, we are using intersection over union (IOU) of a 'tracker bounding box' and 'detection bounding box' as a metric. Here, we analyse till maximizing/optimizing the sum of IOU assignment.
 In the below logic, linear_assignment by default minimizes an objective function. So we need to reverse the sign of IOU_mat for maximization.
 
-## Unmatched detections and trackers:
+## Unmatched detections and trackers
 
 Depending on the results of linear assignment, we make lists for unmatched detections and unmatched trackers.
 When a car enters into a frame and is first detected, it is not matched with any existing tracks. Hence this particular detection is categorized under unmatched detection. If any matching with an overlap less than iou_thrd, it denotes the existence of an untracked object. When the car leaves the frame, the previous used track has no more detections to consider. So, the track is considered as an unmatched track.
@@ -131,15 +128,15 @@ In this way, the tracker and the detection associated in the matching are added 
 We include two important design parameters, min_hits and max_age, in the pipeline. The parameter min_hits is the number of consecutive matches needed to establish a track. The parameter max_age is number of consecutive unmatched detections before a track is deleted. Both parameters need to be tuned to improve the tracking and detection performance.
 
 
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/8.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/9.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/10.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/11.png?raw=true)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/12.png?raw=true)
 
 
 
-## FINAL OBSERVATION:
+## CONCLUSION:
 
 From all the above output images, the condition trk.hits >= the number of consecutive matches need for track establishment and trk.no_losses <= the number of cosecutive unmatched detections before a track is deleted. Hence the track is fully established.
 As the result, the bounding box is created in the output image, as shown in the above figure.
