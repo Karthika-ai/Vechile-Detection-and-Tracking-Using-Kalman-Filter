@@ -75,8 +75,6 @@ Here, Q consists of the variances associated with each of the state estimates as
 
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/4.png?raw=true)
 
-![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/5.png?raw=true)
-
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/6.png?raw=true)
 
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/7.png?raw=true)
