@@ -48,29 +48,13 @@ Hence there will be state equations in terms of x and y.
 Here, we are considering the four corners of the bounding box.
 
 
-!!!!!! bounding image
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/Screen%20Shot%202022-03-19%20at%208.44.05%20PM.png?raw=true)
 
 
-In a X-Y plane:
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/1.png?raw=true)
 
-y1 = y2 ; y4 = y3 (since the pair of points are on same horizontal line)
-x1 = x4 ; x2 = x3 (since the pair of points are on same verticle line)
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/2.png?raw=true)
 
-Hence, there will be four state equtions:
-𝑥1,𝑘=𝑥1,𝑘−1+𝑢1,𝑘−1Δ𝑡 
-𝑥2,𝑘=𝑥2,𝑘−1+𝑢2,𝑘−1Δ𝑡 
-𝑦1,𝑘=𝑦1,𝑘−1+𝑢1,𝑘−1Δ𝑡 
-𝑦1,𝑘=𝑦1,𝑘−1+𝑢1,𝑘−1Δ𝑡 
-
-(As already mentioned acceletaion term is zero, since velocity os considered constant.)
-
-
-The state equation are always paired wih measurement equations, that describes the relationship between state and measurement at the current time stamp k.
-The corresponding equations are obtained by taking the first derivative of staes with respect to time:
-𝑧𝑥1,𝑘=𝑢𝑥1,𝑘−1 
-𝑧𝑥2,𝑘=𝑢𝑥2,𝑘−1 
-𝑧𝑦1,𝑘=𝑢𝑦1,𝑘−1 
-𝑧𝑦2,𝑘=𝑢𝑦2,𝑘−1 
 
 
 ## Notations:
@@ -85,31 +69,81 @@ Here, Q consists of the variances associated with each of the state estimates as
 
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/Screen%20Shot%202022-03-19%20at%208.36.58%20PM.png?raw=true)
 
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/3.png?raw=true)
+
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/4.png?raw=true)
+
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/5.png?raw=true)
+
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/6.png?raw=true)
+
+![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/Screenshots/7.png?raw=true)
 
 
+## Implementing and test tracker
 
+The operations - prediction and update take place in this phase.
+In prediction, the thye previous statres are used to predict the current state. In update, the current measurement value (location of the bounding box) is used, to correct the state.
 
+Here, we use the coordinates and their first-order derivatives of the up, down, left and right cornerx of the bounding box.
+Assumptions:
+Here, we are assuming the constant velocity (thus no acceleration).
+Time interval is constant and is taken as 1
 
-
-
-
-
-
-
-
-
+### OBSERVATION
 
 ![alt text](https://github.com/kcg2015/Vehicle-Detection-and-Tracking/raw/master/example_imgs/low_meas_noise.png)
 
 
-In contrast, if measurement noise is high, the updated state is very close to the initial prediction (aqua bounding box completely overlaps over the green bounding box).
+From the above output images, we can visualize the measurement noises in the Kalman filter process.
+The green bounding box gives the initial state of the car. The red bounding box gives the measurement values. The aqua colored bounding box give sthe updated state.
+Here, the initial state value is 390 The measurement state value is 399 afetr 1 second Updated state value is 398
+If measurement noise is low, the updated state is very close to the measurement. So, the aqua bounding box completely overlaps the red bounding box.
+Suppose, if measurement noise is high, the updated state is very close to the initial prediction. So, the aqua bounding box completely overlaps over the green bounding box.
+From the output images, there is no complete overlapping of green and aqua bounding box. Which infers that the measurement noise is relatively lower.
 
-![alt text](https://github.com/kcg2015/Vehicle-Detection-and-Tracking/raw/master/example_imgs/high_meas_noise.png)
+
+## MAIN functions
+
+These functions, implementt the detection and tracking, including detection-track assignment and track management:
+
+In the below logic, the section assign_detections_to_trackers(trackers, detections, iou_thrd = 0.3) takes from current list of trackers and new detections, output matched detections, unmatched trackers, unmatched detections.
+
+### HUNGARIAN ALGORITHM
+
+The Hungarian method is a combinatorial optimization algorithm that solves the assignment problem in polynomial time and which anticipated later primal–dual methods. (https://en.wikipedia.org/wiki/Hungarian_algorithm)
+
+#### EXAMPLE:
+
+Consider a company has 4 employees and there are four jobs to be done. Here, each employee is capable of doing any of the four jobs. But, the time taken to complete the work is different for different employees. Then Hungarian Algorithm concept is applied and the jobs are assigned to the emplyees in effecient manner so as to control the time and cost of the assignment.
+Here, the analysis is carried out by taking all the values of time taken by the employees for different jobs into a tablular format or in form of matrix (cost matrix) and operations are performed till we optimise the assignment.
+In the cost matrix, if a constant is added to every element of a row or a column, the optimum solution of the resulting assignment problem is the same as the original problem.
+
+In this analysis, we implement Linear Assignment and Hungarian (Munkres) algorithm:
+If multiple detections are identified, we need to assign each of them to a tracker. Here, we are using intersection over union (IOU) of a 'tracker bounding box' and 'detection bounding box' as a metric. Here, we analyse till maximizing/optimizing the sum of IOU assignment.
+In the below logic, linear_assignment by default minimizes an objective function. So we need to reverse the sign of IOU_mat for maximization.
+
+## Unmatched detections and trackers:
+
+Depending on the results of linear assignment, we make lists for unmatched detections and unmatched trackers.
+When a car enters into a frame and is first detected, it is not matched with any existing tracks. Hence this particular detection is categorized under unmatched detection. If any matching with an overlap less than iou_thrd, it denotes the existence of an untracked object. When the car leaves the frame, the previous used track has no more detections to consider. So, the track is considered as an unmatched track.
+In this way, the tracker and the detection associated in the matching are added to the lists of unmatched trackers and unmatched detection.
+We include two important design parameters, min_hits and max_age, in the pipeline. The parameter min_hits is the number of consecutive matches needed to establish a track. The parameter max_age is number of consecutive unmatched detections before a track is deleted. Both parameters need to be tuned to improve the tracking and detection performance.
+
+
+![alt text]()
+![alt text]()
+![alt text]()
+![alt text]()
+![alt text]()
 
 
 
-## Detection-to-Tracker Assignment
+## FINAL OBSERVATION:
 
-## Issues
+From all the above output images, the condition trk.hits >= the number of consecutive matches need for track establishment and trk.no_losses <= the number of cosecutive unmatched detections before a track is deleted. Hence the track is fully established.
+As the result, the bounding box is created in the output image, as shown in the above figure.
+So, we have implemented the detection and tracking logic which includes detection track assignment and track management. In this analysis, the detecter first localized the vehicles in each frame. Then the tracker is updated with detected results. Hence we predicted and updated the location based on the current state. Or it can also be said as we have predicted the cars next position depending upon its previous position. We have also dealt with noise measurements by looking at how the boxes ovelap on eachother depending on the noise levels.
 
-The main issue is occlusion. For example, when one car is passing another car, the two cars can be very close to each other. This can fool the detector into outputing a single (and possibly bigger bounding) box, instead of two separate bounding boxes. In addition, the tracking algorithm may treat this detection as a new detection and sets up a new track. The tracking algorithm may fail again when one of the passing car moves away from another.
+The model has performed pretty well and produced desirable results in prediction, measurement and updation, depending the assumptions taken into consideration.
+
