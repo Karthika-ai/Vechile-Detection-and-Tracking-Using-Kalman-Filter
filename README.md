@@ -81,11 +81,6 @@ Here, Q consists of the variances associated with each of the state estimates as
 
 
 
-## DATA UPLOAD
-
-
-
-
 ## IMPLEMENTATION AND TEST TRACKER
 
 The operations - prediction and update take place in this phase.
