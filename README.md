@@ -26,7 +26,7 @@ Then, we implement Kalman filter to perform two main operations:
       3.Data Uploading Steps -- Steps to upload the data from the github repository into the collab notebook
       4.main.py -- Starting with Loading the data, Implementing the detection, Tracking, Prediction, and Update  
       5.project_video.mp4 -- Video of a vehicle travelling on the road which is split into frames.
-      6.Vehicle detection and tracking project.ipynb - Google Collab Notebook
+      6.Vehicle detection and tracking project.ipynb - Source code for the project (Google Collab Notebook)
       
  
 
@@ -47,9 +47,11 @@ https://github.com/kcg2015/Vehicle-Detection-and-Tracking/tree/master/test_image
 
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/1.png?raw=true)
 
+#### where u is velocity at k-1
+
 ![alt text](https://github.com/Karthika-ai/Vehicle-Detection-and-Tracking-Using-Kalman-Filter/blob/main/screenshots/2.png?raw=true)
 
-
+#### where u is velocity at k-1
 
 ## NOTATIONS
 
